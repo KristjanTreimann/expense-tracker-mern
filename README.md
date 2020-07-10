@@ -49,3 +49,5 @@ create route and connect it to server.js using app.use()
 
 Step5
 create controllers folder and add methods there and connect them to the routes
+
+STEP6
