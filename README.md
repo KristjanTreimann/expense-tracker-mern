@@ -8,7 +8,7 @@ https://www.youtube.com/watch?v=XuFDcZABiDQ&t=1442s
 
 ## Screenshot
 
-![Alt text](https://github.com/KristjanTreimann/breaking-bad-api/blob/master/expense-tracker-react.png)
+![Alt text](https://github.com/KristjanTreimann/expense-tracker-react/blob/master/expense-tracker-react.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
