@@ -10,7 +10,7 @@ dotenv : for our global variables
 
 mongoose
 
-colors - small module to have a color text in the console
+colors - small module to have a color text in the console. visit npmjs.com/package/colors
 
 morgan - logger, tells what methods and what routes are hit in the console
 
@@ -38,3 +38,14 @@ Step2
 In package.json create scripts
 "start": "node server", // npm start -> runs node sevrer
 "server": "nodemon server" // npm run server -> runs nodemon, which will constantly watch it. Reason we use server in script is because our entrypoint is called server.js
+
+Step3
+Setup server.js file
+Use POSTMAN to test
+
+Step4
+Create routes in a separate folder to maintain scalability.
+create route and connect it to server.js using app.use()
+
+Step5
+create controllers folder and add methods there and connect them to the routes
