@@ -18,6 +18,9 @@ const transactions = require('./routes/transactions')
 // Initialize express app
 const app = express()
 
+// Use body parser for addTransaction in transactionController.js
+app.use(express.json())
+
 /* // Simple route. Handle get request to /, has callback fn(takes in request,response ). Res.send sends text hello
 app.get('/', (req, res) => res.send('Hello')) */
 

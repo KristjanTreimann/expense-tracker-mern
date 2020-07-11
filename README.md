@@ -65,3 +65,7 @@ In root create folder models -> new file Transaction.js. Uppercase naming for mo
 Create a schema and export it
 Bring in model to transactionController.js, use async await with try-catch. Add success and error responses.
 Test result in POSTMAN with GET request to 'http://localhost:5000/api/v1/transactions'
+
+STEP8
+When we send data from the client its going to come in 'req.body.something' and in order to use req.body we need to use body parser middleware to our server.js
+app.use(express.json())
