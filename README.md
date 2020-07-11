@@ -69,3 +69,14 @@ Test result in POSTMAN with GET request to 'http://localhost:5000/api/v1/transac
 STEP8
 When we send data from the client its going to come in 'req.body.something' and in order to use req.body we need to use body parser middleware to our server.js
 app.use(express.json())
+Add try-catch with responses in transactionController.js. You can test catch error by console.log(err) and in POSTMAN make POST request with adding raw json params.
+{
+"text": "Payment",
+"amount":500
+}
+
+check with GET request is the data there.
+Add validation errors and map them to let user know whats happening
+
+Handle deleteTransaction.
+add server responses and deleteById
