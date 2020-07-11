@@ -4,9 +4,13 @@ const express = require('express')
 const dotenv = require('dotenv') // dotenv allows us to create global variables
 const colors = require('colors') // colors in console
 const morgan = require('morgan') // used for logging
+const connectDB = require('./config/db')
 
 // Let dotenv know which config file to use
 dotenv.config({ path: './config/config.env' })
+
+// Call connectDB function
+connectDB()
 
 // Bring router in
 const transactions = require('./routes/transactions')

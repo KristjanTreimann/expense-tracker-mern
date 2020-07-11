@@ -51,3 +51,10 @@ Step5
 create controllers folder and add methods there and connect them to the routes
 
 STEP6
+Create database
+mongodb.com -> create account and create a cluster, aws as provider. other settings as is.
+In cluster-> collection -> addmyowndata- Database name expensetracker and collection name transactions.
+To connect -> clusters -> connect -> connect your application -> copy connection string.
+Add connection string to config.env MONGO_URI=connectionstring. Replace password with your own password set up in MongoDB. Replace <dbname>" with database name.
+Connect it using mongoose: in config folder create new file db.js and add mongoose connection.
+In server.js bring in connectDB from db.js and call it out. Node server should show if connection was successful.
