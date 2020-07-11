@@ -80,3 +80,18 @@ Add validation errors and map them to let user know whats happening
 
 Handle deleteTransaction.
 add server responses and deleteById
+By now backend should be done.
+
+STEP9
+Start working on client side
+Use concurrently to run both React and Node servers at the same time
+To shorter http requests to api endpoints we use proxy to shorten http://localhost:5000/api/v1
+To do that add  
+"proxy": "http://localhost:5000"
+to client/package.json
+Then add some scripts to root package.json
+to run the client add to "scripts":
+"client": "npm start --prefix client" // use --prefix to run it in the client folder
+add script concurrently to run both servers at the same time
+"dev": "concurrently \"npm run server\" \"npm run client\""
+to run both servers: npm run dev
