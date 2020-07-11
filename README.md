@@ -58,3 +58,10 @@ To connect -> clusters -> connect -> connect your application -> copy connection
 Add connection string to config.env MONGO_URI=connectionstring. Replace password with your own password set up in MongoDB. Replace <dbname>" with database name.
 Connect it using mongoose: in config folder create new file db.js and add mongoose connection.
 In server.js bring in connectDB from db.js and call it out. Node server should show if connection was successful.
+
+STEP7
+Create model
+In root create folder models -> new file Transaction.js. Uppercase naming for models.
+Create a schema and export it
+Bring in model to transactionController.js, use async await with try-catch. Add success and error responses.
+Test result in POSTMAN with GET request to 'http://localhost:5000/api/v1/transactions'
