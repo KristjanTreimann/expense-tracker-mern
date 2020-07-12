@@ -202,7 +202,22 @@ Project should be now deployable using Heroku!
 
 ## STEP 16
 
-Deploy
+Deploy using Heroku.
+
+> When building only front-end application with React there is script called `create-react-app` and using `npm run build` it takes our React application and builds it out into static assets that we can just upload to any server. However we have backend as well so dealing with full-stack application is bit different.
+
+Thats when HEROKU comes in...
+
+In Heroku we dont have access to our front-end dev server(:3000) that `create-react-app` gives us.  
+It's going to look our backend **server.js** file wich will run on Herokus port, but what we need to do is basically say unless we're hitting our API routes ('/api/v1/transactions') then we want to hit `index.html` file in **client/build** folder to load our front-end.
+Also we're not going to make a **build** folder manually using npm run build  
+Instead we're creating `postbuild` script that once we push our app to Heroku it will automatically do the build there
+To achieve that:
+
+1. Delete the **build** folder if exists
+2. In **server.js** under last API route serve static assets if in production. Check **Step 15 (4-6)**
+3. Create postbuild script in root(server) package.json `"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"` false because it doesnt run build script if set to true.
+   --prefix client to run in client folder
 
 > ### Screenshot
 

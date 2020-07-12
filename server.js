@@ -35,6 +35,7 @@ app.get('/', (req, res) => res.send('Hello')) */
 // Whenever we make request to /api/... it should use to transactions.js route
 app.use('/api/v1/transactions', transactions)
 
+// Serve static assets if in production
 // Check enviroment. If production
 if (process.env.NODE_ENV === 'production') {
   //set static folder to build folder
