@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState' // to pull global state in
+import { numberWithCommas } from '../utils/format'
 
 // we need to catch prop(transactions) passed in from TransactionList.js. Use destructuring { transactions}
 // or const ... = (props) => {...}. If 'props are used' then you can access props.transaction.text
@@ -14,7 +15,7 @@ export const Transaction = ({ transaction }) => {
       {transaction.text}{' '}
       <span>
         {sign}
-        {Math.abs(transaction.amount)}€
+        {numberWithCommas(Math.abs(transaction.amount))}€
       </span>
       <button
         className='delete-btn'

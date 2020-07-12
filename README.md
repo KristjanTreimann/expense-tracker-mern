@@ -145,3 +145,26 @@ STEP13
 addTransaction to database
 axios.post needs config object with headers defined, also transaction what comes from the input
 then we get the respond and dispatch it to reduces. as payload we put response data from post request
+
+STEP14 OPTIONAL
+add separators to numbers
+create a folder utils and file inside named format.js
+
+STEP15
+Prepare for production
+cd to client folder
+npm run build
+cd ..
+As we want to route to the route index.html then in server.js
+Bring in path module to manipulate path names and make thing easier
+Then below api routes
+check for production -> set NODE_ENV=production in config.env
+Check if production in server.js and set static folder to a build folder
+Have a route for everything and load index.html when hit
+Now when we run npm start in root folder only node server should be running
+You can access it locally using http://localhost:5000 when run from the browser.
+
+Project should be now deployable using Heroku for example
+
+STEP 16
+Deploy
