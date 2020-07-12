@@ -16,7 +16,7 @@
 
 ---
 
-### Install dev dependencies:
+### Install dev dependencies
 
 > `npm i -D nodemon concurrently`
 
@@ -99,9 +99,9 @@ Create controllers folder and add methods there and connect them to the routes
 
 > Start working on client side
 
-1.Use `concurrently` to run both React and Node servers at the same time
+1. Use `concurrently` to run both React and Node servers at the same time
 
-2. To shorter http requests to api endpoints we use `proxy` to shorten http://localhost:5000/api/v1  
+2. To shorter http requests to api endpoints we use `proxy` to shorten <http://localhost:5000/api/v1>  
    To do that add `"proxy": "http://localhost:5000"`
    to **client/package.json**
 3. Then add some `scripts` to root **package.json**  
@@ -135,14 +135,12 @@ Import `useEffect` hook if you want to make any **_http request_** from the comp
 Call `getTransactions()` from `useEffect` hook. Pass in empty array `[]` as an 2nd perim, otherwise its going to be an infinite loop.  
 `Transactions` should be visible in frontend under transactions.
 
+> ## How getTransactions work
 >
-
-> ## How getTransactions work:
->
-> 1.  We have our initial state in **GlobalState.js** where transactions are empty.
-> 2.  We have our action `GetTransactions()` which were calling from **TransactionList.js** using `useEffect` hook
-> 3.  In** GlobalState.js** `getTransactions()` fetches transactions from backend using `axios`, then we `dispatch` GET_TRANSACTIONS in our `reducer` and we send the data as the `payload`.
-> 4.  In the **AppReducer.js** in case: `'GET_TRANSACTIONS'` it changes the `state` -> it adds those transactions from the response to our global state.
+> 1. We have our initial state in **GlobalState.js** where transactions are empty.
+> 2. We have our action `GetTransactions()` which were calling from **TransactionList.js** using `useEffect` hook
+> 3. In **GlobalState.js** `getTransactions()` fetches transactions from backend using `axios`, then we `dispatch` GET_TRANSACTIONS in our `reducer` and we send the data as the `payload`.
+> 4. In the **AppReducer.js** in case: `'GET_TRANSACTIONS'` it changes the `state` -> it adds those transactions from the response to our global state.
 
 ---
 
@@ -198,7 +196,7 @@ Prepare for production:
 6. In **server.js** below api routes `check if production` and **set static folder** to a **build folder**
 7. Have a route for everything and load `index.html` when hit
    > Now when we run `npm run start` in `root folder` only node server should be running.  
-   > You can access it locally using http://localhost:5000 in the browser.
+   > You can access it locally using <http://localhost:5000> in the browser.
 
 Project should be now deployable using Heroku!
 
@@ -206,6 +204,6 @@ Project should be now deployable using Heroku!
 
 Deploy
 
-> ### SCREENSHOT
->
-> <img src='screen.png'></img>
+> ### Screenshot
+
+![alt text](screen.png)
