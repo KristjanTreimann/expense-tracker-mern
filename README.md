@@ -140,3 +140,8 @@ It now should delete from UI.
 Also need to make calls to our database
 in GlobalState.js modify deleteTransaction action
 Deleting from UI should work and delete from db as well.
+
+STEP13
+addTransaction to database
+axios.post needs config object with headers defined, also transaction what comes from the input
+then we get the respond and dispatch it to reduces. as payload we put response data from post request

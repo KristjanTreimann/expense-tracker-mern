@@ -69,12 +69,31 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  function addTransaction(transaction) {
-    // Takes in entire transaction
-    dispatch({
-      type: 'ADD_TRANSACTION',
-      payload: transaction
-    })
+  async function addTransaction(transaction) {
+    // sending data with needs contenttype
+    // with axios we need to create config object
+    const config = {
+      headers: {
+        'Content-Type': 'application/json' // set the contenttype to application/json
+      }
+    }
+
+    // make http request
+    try {
+      // add transaction we are adding as 2nd perim what comes in from async function addTransaction(transaction)
+      // 3rd perimeter is config which has the headers
+      const res = await axios.post('/api/v1/transactions', transaction, config)
+      dispatch({
+        type: 'ADD_TRANSACTION',
+        // for the payload we want to pass in a data from the response
+        payload: res.data.data
+      })
+    } catch (err) {
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: err.response.data.error
+      })
+    }
   }
 
   // We actually need provider component, so use return and put children prop inside
