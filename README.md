@@ -1,5 +1,7 @@
 # MERN - expense tracker with comments
 
+Have a look at it in [Heroku](https://ancient-island-43329.herokuapp.com/)!
+
 ## Step 1
 
 ### Install required dependencies using npm
