@@ -1,170 +1,211 @@
-# For the project we install using npm
+# MERN - expense tracker with comments
 
-npm i express dotenv mongoose colors morgan
+## Step 1
 
-npm i -D nodemon concurrently // -D installs as dev dependencies
+### Install required dependencies using npm
 
-express
+> `npm i express dotenv mongoose colors morgan`
 
-dotenv : for our global variables
-
-mongoose
-
-colors - small module to have a color text in the console. visit npmjs.com/package/colors
-
-morgan - logger, tells what methods and what routes are hit in the console
-
----
-
-nodemon
-
-allow us to constantly run our server without having to restart it
-
-concurrently
-
-allow us to run our backend server on a port :5000 and also our react dev server on another port :3000 at the sime time with one single npm script
-
-Mongoose
-
-Mongoose is an object datamap. Basically its a layer that we can use to interact with our database, we can create a model for our transactions and we can make querys to our database.
+| Dependancy |                                                                                      Description                                                                                       |                       Link |
+| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | -------------------------: |
+| express    |                                                                         small, robust tooling for HTTP servers                                                                         |  npmjs.com/package/express |
+| dotenv     |                                                                        loads environment variables from a .env                                                                         |   npmjs.com/package/dotenv |
+| mongoose   | Mongoose is an object datamap. Basically its a layer that we can use to interact with our database, we can create a model for our transactions and we can make querys to our database. | npmjs.com/package/mongoose |
+| colors     |                                                                    small module to have a color text in the console                                                                    |   npmjs.com/package/colors |
+| morgan     |                                                                       HTTP request logger middleware for node.js                                                                       |   npmjs.com/package/morgan |
 
 ---
 
-For our database we use MongoDBAtlas which is a cloud version of MongoDB
+### Install dev dependencies:
+
+> `npm i -D nodemon concurrently`
+
+| DevDependancy |                                                                    Description                                                                     |                           Link |
+| :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------: | -----------------------------: |
+| nodemon       |                                         allow us to constantly run our server without having to restart it                                         |      npmjs.com/package/nodemon |
+| concurrently  | allow us to run our backend server on a port :5000 and also our react dev server on another port :3000 at the same time with one single npm script | npmjs.com/package/concurrently |
 
 ---
 
-Step2
-In package.json create scripts
-"start": "node server", // npm start -> runs node sevrer
-"server": "nodemon server" // npm run server -> runs nodemon, which will constantly watch it. Reason we use server in script is because our entrypoint is called server.js
+> For our database we use MongoDBAtlas which is a cloud version of MongoDB
 
-Step3
-Setup server.js file
+---
+
+## Step 2
+
+In **package.json** create scripts  
+`"start": "node server"`,  
+`"server": "nodemon server"`
+
+`npm start` -> runs node server  
+`npm run server` -> runs nodemon, which will constantly watch it. Reason we use server in script is because our entrypoint is called server.js
+
+## Step 3
+
+Setup **server.js** file  
 Use POSTMAN to test
 
-Step4
-Create routes in a separate folder to maintain scalability.
-create route and connect it to server.js using app.use()
+## Step 4
 
-Step5
-create controllers folder and add methods there and connect them to the routes
+Create routes in a separate folder to maintain scalability.  
+Create route and connect it to **server.js** using `app.use()`
 
-STEP6
-Create database
-mongodb.com -> create account and create a cluster, aws as provider. other settings as is.
-In cluster-> collection -> addmyowndata- Database name expensetracker and collection name transactions.
-To connect -> clusters -> connect -> connect your application -> copy connection string.
-Add connection string to config.env MONGO_URI=connectionstring. Replace password with your own password set up in MongoDB. Replace <dbname>" with database name.
-Connect it using mongoose: in config folder create new file db.js and add mongoose connection.
-In server.js bring in connectDB from db.js and call it out. Node server should show if connection was successful.
+## Step 5
 
-STEP7
-Create model
-In root create folder models -> new file Transaction.js. Uppercase naming for models.
-Create a schema and export it
-Bring in model to transactionController.js, use async await with try-catch. Add success and error responses.
-Test result in POSTMAN with GET request to 'http://localhost:5000/api/v1/transactions'
+Create controllers folder and add methods there and connect them to the routes
 
-STEP8
-When we send data from the client its going to come in 'req.body.something' and in order to use req.body we need to use body parser middleware to our server.js
-app.use(express.json())
-Add try-catch with responses in transactionController.js. You can test catch error by console.log(err) and in POSTMAN make POST request with adding raw json params.
-{
-"text": "Payment",
-"amount":500
-}
+## Step 6
 
-check with GET request is the data there.
-Add validation errors and map them to let user know whats happening
+> Create and connect to database
 
-Handle deleteTransaction.
-add server responses and deleteById
-By now backend should be done.
+1. Create account in www.mongodb.com and create a cluster, aws as provider. other settings as is.
+2. In cluster-> collection -> addmyowndata- Database name expensetracker and collection name transactions.
+3. To **connect** -> clusters -> connect -> connect your application -> copy connection string.
+4. Add connection string to **config.env** `MONGO_URI=connectionstring`.
+5. Replace password with your own password set up in MongoDB. Replace `<dbname>` with database name.
+6. Connect it using `mongoose`: in config folder create new file **db.js** and add mongoose connection.
+7. In **server.js** bring in connectDB from **db.js** and call it out.
 
-STEP9
-Start working on client side
-Use concurrently to run both React and Node servers at the same time
-To shorter http requests to api endpoints we use proxy to shorten http://localhost:5000/api/v1
-To do that add  
-"proxy": "http://localhost:5000"
-to client/package.json
-Then add some scripts to root package.json
-to run the client add to "scripts":
-"client": "npm start --prefix client" // use --prefix to run it in the client folder
-add script concurrently to run both servers at the same time
-"dev": "concurrently \"npm run server\" \"npm run client\""
-to run both servers: npm run dev
+> Node server should show if connection was successful.
 
-STEP10
-INTEGRATE FRONT + BACK
-Install Axios to make requests from frontend to backend
-cd client
-npm i axios
-Make requests through actions in client/src/context/GlobalState.js
-Create new action to fetch transactions from the backend. Use axios.get
-Dispatch result to reducer.
-Create new case in AppReducer.js for getTransaction and for errors create 'TRANSACTION_ERROR' case
-In ADD_TRANSACCTIONS case, because were dealing with fetching from API, transactions takes in current state first and then we add action.payload to it.
-Now it should be okay in AppReducer.
-In GlobalState.js we have getTransaction() action and we need to pass it in to GlobalContext.Provider.
-In Provider pass in also rest of the state, so we can access these in any of the components :
-error = state.error // use state, because they come from the state
-loading = state.loading
+## Step 7
 
-STEP11
-call getTransactions() from TransactionsList.js.
-Pull out getTransactions from the state in addition to transactions
-Import useEffect hook if you want to make any http request from the component
-Call getTransactions() from useEffect hook. Pass in empty array as an 2nd perim, otherwise its going to be an infinite loop.
+> Create model
 
-SIDESTEP
-Implement morgan to server.js for logging
-https://www.npmjs.com/package/morgan
+1. In root create folder models -> new file **Transaction.js**. Uppercase naming for models.
+2. Create a schema and export it
+3. Bring in model to **transactionController.js**, use `async await` with `try-catch`. Add success and error responses.
+4. Test result in POSTMAN with `GET` request to `'http://localhost:5000/api/v1/transactions'`
 
-Transactions should be visible in frontend under transactions.
+## Step 8
 
-How getTransactions work.
+> When we send data from the client its going to come in 'req.body.something'
 
-1. We have our initial state in GlobalState.js where transactions are empty.
-2. We have our action GetTransactions() which were calling from TransactionList.js using useEffect hook
-3. In GlobalState.js getTransactions() fetches transactions from backend using axios, then we dispatch GET_TRANSACTIONS in our reducer and we send the data as the payload.
-4. In the AppReducer.js in case:: 'GET_TRANSACTIONS' it changes the state -> it adds those transactions from the response to our global state.
+1. In order to use req.body we need to add - body parser `middleware` - to our **server.js** with `app.use(express.json())`
+2. Add try-catch with responses in **transactionController.js**.
+3. Test catch error by `console.log(err)` and in POSTMAN make `POST` request with adding raw json params.
+   `{ "text": "Payment", "amount":500 }`
+4. Check with `GET` request is the data there.
+5. Add validation errors and map them to let user know whats happening
+6. Handle deleteTransaction - add server responses and deleteById
 
-STEP12
-Modify deleteTransaction
-Using MongoDB means in database id is used as \_id . So we need to change the id in
-Transaction.js ( where we pass in transaction.id). Rename it to transaction.\_id
-AppReducer.js in DELETE_TRANSACTION case
-It now should delete from UI.
-Also need to make calls to our database
-in GlobalState.js modify deleteTransaction action
-Deleting from UI should work and delete from db as well.
+---
 
-STEP13
-addTransaction to database
-axios.post needs config object with headers defined, also transaction what comes from the input
-then we get the respond and dispatch it to reduces. as payload we put response data from post request
+> By now backend should be done.
 
-STEP14 OPTIONAL
-add separators to numbers
-create a folder utils and file inside named format.js
+---
 
-STEP15
-Prepare for production
-cd to client folder
-npm run build
-cd ..
-As we want to route to the route index.html then in server.js
-Bring in path module to manipulate path names and make thing easier
-Then below api routes
-check for production -> set NODE_ENV=production in config.env
-Check if production in server.js and set static folder to a build folder
-Have a route for everything and load index.html when hit
-Now when we run npm start in root folder only node server should be running
-You can access it locally using http://localhost:5000 when run from the browser.
+## Step 9
 
-Project should be now deployable using Heroku for example
+> Start working on client side
 
-STEP 16
+1.Use `concurrently` to run both React and Node servers at the same time
+
+2. To shorter http requests to api endpoints we use `proxy` to shorten http://localhost:5000/api/v1  
+   To do that add `"proxy": "http://localhost:5000"`
+   to **client/package.json**
+3. Then add some `scripts` to root **package.json**  
+   ...to run the client use --prefix to run it in the client folder ->
+   `"client": "npm start --prefix client"`  
+   ...to run both servers at the same time ->
+   `"dev": "concurrently \"npm run server\" \"npm run client\""`
+4. Run both Node and React servers using `npm run dev` in root folder
+
+## Step 10
+
+> INTEGRATE FRONT + BACK
+
+1. Install **Axios** to make requests from frontend to backend `cd client` -> `npm i axios`
+2. Make requests through actions in client/src/context/**GlobalState.js**
+3. Create new action to fetch transactions from the backend. Use `axios.get`
+4. Dispatch result to reducer.
+5. Create new case in **AppReducer.js** for `getTransaction` and for errors create 'TRANSACTION_ERROR' case
+6. In `ADD_TRANSACTIONS` case, because were dealing with fetching from API, transactions takes in current state first and then we add `action.payload` to it.
+7. Now it should be okay in **AppReducer.js**.
+8. **In GlobalState.js** we have `getTransaction()` action and we need to pass it in to `GlobalContext.Provider`.  
+   In Provider pass in also rest of the state, so we can access these in any of the components.  
+   error = state.error // uses state, because they come from the state  
+   loading = state.loading
+
+## Step 11
+
+Call `getTransactions()` from **TransactionsList.js**.  
+Pull out `getTransactions` from the state in addition to `transactions`  
+Import `useEffect` hook if you want to make any **_http request_** from the component  
+Call `getTransactions()` from `useEffect` hook. Pass in empty array `[]` as an 2nd perim, otherwise its going to be an infinite loop.  
+`Transactions` should be visible in frontend under transactions.
+
+>
+
+> ## How getTransactions work:
+>
+> 1.  We have our initial state in **GlobalState.js** where transactions are empty.
+> 2.  We have our action `GetTransactions()` which were calling from **TransactionList.js** using `useEffect` hook
+> 3.  In** GlobalState.js** `getTransactions()` fetches transactions from backend using `axios`, then we `dispatch` GET_TRANSACTIONS in our `reducer` and we send the data as the `payload`.
+> 4.  In the **AppReducer.js** in case: `'GET_TRANSACTIONS'` it changes the `state` -> it adds those transactions from the response to our global state.
+
+---
+
+### Sidestep
+
+Implement `morgan` to **server.js** for logging
+<https://www.npmjs.com/package/morgan>
+
+---
+
+## Step 12
+
+### Delete transaction from database
+
+Using _MongoDB_ means in database `id` is used as `_id` .  
+So we need to change the `transaction.id` to `transaction._id` in **Transaction.js** (button) and **AppReducer.js** (case)
+
+> Test if delete btn works and removes transaction from UI
+
+Also we need to make calls to our database to delete from there as well  
+In **GlobalState.js** modify`deleteTransaction action`
+
+> Now deleting from UI should also remove from database
+
+## Step 13
+
+### Add transaction to database
+
+In **GlobalState.js**  
+`axios.post()` takes in 3 arguments:
+
+1. `config` object with `headers` defined
+2. `transaction` what comes from the input
+   then we get the respond and dispatch it to reducer
+3. as `payload` we put response data from post request
+
+## Step 14
+
+Add separators to numbers  
+create a folder **utils** and file inside named **format.js**
+
+## Step 15
+
+Prepare for production:
+
+1. `cd` to `client` folder
+2. `npm run build`
+3. `cd ..`
+   > As we want to route to the route index.html then...
+4. in **server.js**
+   bring in `path` module to manipulate path names and make thing easier
+5. In **config.env** set `NODE_ENV=production`
+6. In **server.js** below api routes `check if production` and **set static folder** to a **build folder**
+7. Have a route for everything and load `index.html` when hit
+   > Now when we run `npm run start` in `root folder` only node server should be running.  
+   > You can access it locally using http://localhost:5000 in the browser.
+
+Project should be now deployable using Heroku!
+
+## STEP 16
+
 Deploy
+
+> ### SCREENSHOT
+>
+> <img src='screen.png'></img>
