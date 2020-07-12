@@ -95,3 +95,19 @@ to run the client add to "scripts":
 add script concurrently to run both servers at the same time
 "dev": "concurrently \"npm run server\" \"npm run client\""
 to run both servers: npm run dev
+
+STEP10
+INTEGRATE FRONT + BACK
+Install Axios to make requests from frontend to backend
+cd client
+npm i axios
+Make requests through actions in client/src/context/GlobalState.js
+Create new action to fetch transactions from the backend. Use axios.get
+Dispatch result to reducer.
+Create new case in AppReducer.js for getTransaction and for errors create 'TRANSACTION_ERROR' case
+In ADD_TRANSACCTIONS case, because were dealing with fetching from API, transactions takes in current state first and then we add action.payload to it.
+Now it should be okay in AppReducer.
+In GlobalState.js we have getTransaction() action and we need to pass it in to GlobalContext.Provider.
+In Provider pass in also rest of the state, so we can access these in any of the components :
+error = state.error // use state, because they come from the state
+loading = state.loading

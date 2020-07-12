@@ -7,6 +7,14 @@
 export default (state, action) => {
   // we are checking the actions type with switch
   switch (action.type) {
+    //
+    case 'GET_TRANSACTIONS':
+      return {
+        ...state, // get what is in initial state
+        loading: false, // set loading to false, because transactions were fetched
+        transactions: action.payload // what starts off as an empty array, put action.payload because we dispatched it from GlobalState.js and
+        // payload is the data we got from the response while fetching with axios.get
+      }
     // create case for DELETE_TRANSACTION from GlobalState.js
     case 'DELETE_TRANSACTION':
       return {
@@ -28,7 +36,17 @@ export default (state, action) => {
         ...state, // return initial state
         // return transactions whats already in there in addition to one in the payload
         // set this to an array, get inital by using spread operator and add new transaction from action.payload
-        transactions: [action.payload, ...state.transactions]
+        /* transactions: [action.payload, ...state.transactions] */
+
+        // When fetching from API we have transactions first, and new one (action.payload) is after that.
+        transactions: [...state.transactions, action.payload]
+      }
+
+    // we also want transaction error so we can access that in components
+    case 'TRANSACTION_ERROR':
+      return {
+        ...state,
+        error: action.payload // fill error with payload
       }
     default:
       // default return state as it is

@@ -2,11 +2,15 @@
 // Were gonna have global reducer as well
 import React, { createContext, useReducer } from 'react'
 import AppReducer from './AppReducer'
+import axios from 'axios' // fetch data from backend
 
 // Initial state. Single object. Any global state will go to this object. However we need only transactions atm.
 // We can use global state in components and manipulate it when we pass this data down.
 const initialState = {
-  transactions: []
+  transactions: [],
+  // Since we have asynchronous calls to our backend add these to our state
+  error: null, // if we get any errors, we can use these through our state(alert i.e)
+  loading: true // to use spinner, initially true -> shows spinner when loading
 }
 
 // We need to create global context using createContext
@@ -20,6 +24,31 @@ export const GlobalContext = createContext(initialState)
 export const GlobalProvider = ({ children }) => {
   // we use useReducer, we want access to state and when using useReducer we need to call dispatch
   const [state, dispatch] = useReducer(AppReducer, initialState) // useReducer(takes in whatever the reducer is(create separate file for that), and also initialState)
+
+  // Actions
+  // Get from backend. Use async + try-catch because we use axios which returns a promise
+  async function getTransactions() {
+    try {
+      //make GET request and put it to res variable. Pass in only endpoint since we have proxy defined
+      const res = await axios.get('/api/v1/transactions')
+
+      // to get the data -  res.data return whole object. so use res.data.data to get data
+      // dispatch to our reducer, because we are changing the state. It starts off as an empty array
+      // we make the request and then send the response down through the state
+      // dispatch an object with a type 'GET_TRANSAXCTIONS' and payload is data we get from backend res.data.data
+      dispatch({
+        type: 'GET_TRANSACTIONS',
+        payload: res.data.data
+      })
+    } catch (error) {
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: error.response.data.error // send actual error as payload access err.response.data
+      })
+    }
+
+    return getTransactions()
+  }
 
   // Actions what are making calls to our reducer
   // function deleteTransaction(takes in id of which one to delete)
@@ -49,7 +78,10 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         transactions: state.transactions,
-        deleteTransaction /*  In order to use delete pass it here to provider and now we can pull it to other components */,
+        error: state.error,
+        loading: state.loading,
+        getTransactions, // In order to call it elsewhere pass it in
+        deleteTransaction, //  In order to use delete pass it here to provider and now we can pull it to other components
         addTransaction // in order to access it pass it in to provider
       }}
     >
