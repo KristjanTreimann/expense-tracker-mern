@@ -46,8 +46,6 @@ export const GlobalProvider = ({ children }) => {
         payload: error.response.data.error // send actual error as payload access err.response.data
       })
     }
-
-    return getTransactions()
   }
 
   // Actions what are making calls to our reducer

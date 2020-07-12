@@ -111,3 +111,22 @@ In GlobalState.js we have getTransaction() action and we need to pass it in to G
 In Provider pass in also rest of the state, so we can access these in any of the components :
 error = state.error // use state, because they come from the state
 loading = state.loading
+
+STEP11
+call getTransactions() from TransactionsList.js.
+Pull out getTransactions from the state in addition to transactions
+Import useEffect hook if you want to make any http request from the component
+Call getTransactions() from useEffect hook. Pass in empty array as an 2nd perim, otherwise its going to be an infinite loop.
+
+SIDESTEP
+Implement morgan to server.js for logging
+https://www.npmjs.com/package/morgan
+
+Transactions should be visible in frontend under transactions.
+
+How getTransactions work.
+
+1. We have our initial state in GlobalState.js where transactions are empty.
+2. We have our action GetTransactions() which were calling from TransactionList.js using useEffect hook
+3. In GlobalState.js getTransactions() fetches transactions from backend using axios, then we dispatch GET_TRANSACTIONS in our reducer and we send the data as the payload.
+4. In the AppReducer.js in case:: 'GET_TRANSACTIONS' it changes the state -> it adds those transactions from the response to our global state.

@@ -21,6 +21,11 @@ const app = express()
 // Use body parser for addTransaction in transactionController.js
 app.use(express.json())
 
+// add morgan. if were in dev mode use morgan. pass in dev method.
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
+
 /* // Simple route. Handle get request to /, has callback fn(takes in request,response ). Res.send sends text hello
 app.get('/', (req, res) => res.send('Hello')) */
 
