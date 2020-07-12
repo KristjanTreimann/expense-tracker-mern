@@ -130,3 +130,13 @@ How getTransactions work.
 2. We have our action GetTransactions() which were calling from TransactionList.js using useEffect hook
 3. In GlobalState.js getTransactions() fetches transactions from backend using axios, then we dispatch GET_TRANSACTIONS in our reducer and we send the data as the payload.
 4. In the AppReducer.js in case:: 'GET_TRANSACTIONS' it changes the state -> it adds those transactions from the response to our global state.
+
+STEP12
+Modify deleteTransaction
+Using MongoDB means in database id is used as \_id . So we need to change the id in
+Transaction.js ( where we pass in transaction.id). Rename it to transaction.\_id
+AppReducer.js in DELETE_TRANSACTION case
+It now should delete from UI.
+Also need to make calls to our database
+in GlobalState.js modify deleteTransaction action
+Deleting from UI should work and delete from db as well.

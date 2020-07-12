@@ -27,7 +27,7 @@ export default (state, action) => {
         // Type is delete_transactions and its going to run this, because we are checking action.type in switch
         // We have a id in payload so we filter out anything that has this id
         transactions: state.transactions.filter(
-          (transaction) => transaction.id !== action.payload
+          (transaction) => transaction._id !== action.payload
         )
       }
 

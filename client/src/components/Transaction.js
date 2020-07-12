@@ -18,7 +18,7 @@ export const Transaction = ({ transaction }) => {
       </span>
       <button
         className='delete-btn'
-        onClick={() => deleteTransaction(transaction.id)} // use arrow function to call deleteTransaction(pass in id)
+        onClick={() => deleteTransaction(transaction._id)} // use arrow function to call deleteTransaction(pass in id)
       >
         x
       </button>

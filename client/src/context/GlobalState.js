@@ -40,10 +40,10 @@ export const GlobalProvider = ({ children }) => {
         type: 'GET_TRANSACTIONS',
         payload: res.data.data
       })
-    } catch (error) {
+    } catch (err) {
       dispatch({
         type: 'TRANSACTION_ERROR',
-        payload: error.response.data.error // send actual error as payload access err.response.data
+        payload: err.response.data.error // send actual error as payload access err.response.data
       })
     }
   }
@@ -52,11 +52,21 @@ export const GlobalProvider = ({ children }) => {
   // function deleteTransaction(takes in id of which one to delete)
   // We can dispatch to our reducer our object. Were gonna have a type which is string called 'DELETE_TRANSACTION'
   // It also needs a payload what is any data we want to send to it. Currently it is id
-  function deleteTransaction(id) {
-    dispatch({
-      type: 'DELETE_TRANSACTION',
-      payload: id
-    })
+  // make async because of axios and add try-catch
+  async function deleteTransaction(id) {
+    try {
+      // make await call to database to delete. use backticks
+      await axios.delete(`/api/v1/transactions/${id}`)
+      dispatch({
+        type: 'DELETE_TRANSACTION',
+        payload: id
+      })
+    } catch (err) {
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: err.response.data.error
+      })
+    }
   }
 
   function addTransaction(transaction) {
