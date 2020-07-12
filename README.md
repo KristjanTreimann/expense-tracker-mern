@@ -206,18 +206,44 @@ Deploy using Heroku.
 
 > When building only front-end application with React there is script called `create-react-app` and using `npm run build` it takes our React application and builds it out into static assets that we can just upload to any server. However we have backend as well so dealing with full-stack application is bit different.
 
-Thats when HEROKU comes in...
+## Thats when HEROKU comes in
 
 In Heroku we dont have access to our front-end dev server(:3000) that `create-react-app` gives us.  
-It's going to look our backend **server.js** file wich will run on Herokus port, but what we need to do is basically say unless we're hitting our API routes ('/api/v1/transactions') then we want to hit `index.html` file in **client/build** folder to load our front-end.
-Also we're not going to make a **build** folder manually using npm run build  
-Instead we're creating `postbuild` script that once we push our app to Heroku it will automatically do the build there
+It's going to look our backend **server.js** file wich will run on Herokus port, but what we need to do is basically say  
+unless we're hitting our API routes ('/api/v1/transactions') then we want to hit `index.html` file in **client/build** folder to load our front-end.  
+Also **we're not** going to **make** a **build** folder **manually** using npm run build  
+Instead we're creating `postbuild` script that once we push our app to **Heroku** it will automatically do the build there  
 To achieve that:
 
-1. Delete the **build** folder if exists
+1. Delete the **build** folder if it exists
 2. In **server.js** under last API route serve static assets if in production. Check **Step 15 (4-6)**
-3. Create postbuild script in root(server) package.json `"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"` false because it doesnt run build script if set to true.
+3. Create postbuild script in root(server) **package.json**  
+   `"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"`  
+   false because it doesnt run build script if set to true.  
    --prefix client to run in client folder
+4. Install [**Heroku**](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up) and sign up.
+
+   > If heroku command not found then:  
+   > `npm uninstall -g heroku-cli`  
+   > `npm i -g heroku`
+
+5. In our terminal in server(root) folder type: `heroku login`
+6. Create new heroku app from this directory: `heroku create`
+7. Visit **Heroku** dashboard in browser to see if app was created
+8. Click on created app and choose `Deploy`
+9. Follow onscreen instructions to deploy
+
+   > If Git repository already exists:
+
+   1. `git add .`
+   2. `git commit -am "Version 1.0.0"`
+   3. `heroku git:remote -a heroku-app-name`
+   4. `git push heroku master` // should also run the postbuild script
+   5. If you can read `Veryfing deploy... done.` in the terminal then
+
+   > It may happen that you have to whitelist IP address in mongoDB. In network access allow everyone to access and redeploy heroku app.
+
+## Congratulations you have just deployed your app to **Heroku**
 
 > ### Screenshot
 
